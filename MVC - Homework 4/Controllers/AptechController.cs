@@ -1,27 +1,39 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using MvcApp.Models;
 using System.Collections.Generic;
-using System.Web.Mvc;
+using System.Linq;
 
 namespace MvcApp.Controllers
 {
-    public class AptechController : System.Web.Mvc.Controller
+    public class AptechController : Controller
     {
-        public System.Web.Mvc.ActionResult Index()
+        public IActionResult Index()
         {
-            ViewBag.Address = "285 Doi Can, Ba Dinh, Hanoi";
+            ViewBag.Address = "285 Doi Can, Ba Dinh, Ha Noi";
             return View();
         }
 
-        public ActionResult StudentList()
+        public IActionResult StudentList()
         {
-            var students = new List<string> { "John Smith", "Anna Johnson", "David Lee" };
+            var students = new List<Student>
+            {
+                new Student { Id = 1, Name = "Nguyen Van A" },
+                new Student { Id = 2, Name = "Tran Thi B" },
+                new Student { Id = 3, Name = "Le Van C" }
+            };
             return View(students);
         }
 
-        public ActionResult StudentDetail(int id)
+        public IActionResult StudentDetail(int? id)
         {
-            var student = $"Student {id}: Sample Name";
-            return View((object)student);
+            var students = new List<Student>
+            {
+                new Student { Id = 1, Name = "Nguyen Van A" },
+                new Student { Id = 2, Name = "Tran Thi B" },
+                new Student { Id = 3, Name = "Le Van C" }
+            };
+            var student = students.FirstOrDefault(s => s.Id == id);
+            return View(student);
         }
     }
 }
